@@ -1,6 +1,6 @@
-# Express Boilerplate!
+# NotesApp API
 
-This is a boilerplate project used for starting new projects!
+This is the API repo for the [NotesApp](https://github.com/stephenparkhum/NotesApp) projects
 
 ## Set up
 
