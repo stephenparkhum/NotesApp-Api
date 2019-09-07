@@ -1,14 +1,21 @@
 const express = require('express');
-const xss = require('xss')
+const xss = require('xss');
+const FoldersService = require('./folders-service');
 
-const jsonParser = express.json()
+const jsonParser = express.json();
 
 const foldersRouter = express.Router();
 
 foldersRouter
-    .router('/')
+    .route('/')
     .get((req, res, next) => {
-        console.log('All folders route is working!');
+        FoldersService.getAllFolders(
+            req.app.get('db')
+        )
+        .then(folders => {
+            res.json(folders);
+        })
+        .catch(next);
     });
 
 
