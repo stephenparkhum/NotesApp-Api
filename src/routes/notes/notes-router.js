@@ -12,11 +12,49 @@ notesRouter
         NotesService.getAllNotes(
             req.app.get('db')
         )
-        .then(folders => {
-            res.json(folders);
+        .then(notes => {
+            res.json(notes);
         })
         .catch(next);
-    });
+    })
+    .post(jsonParser, (req, res, next) => {
+        const {
+            title,
+            content,
+            modified,
+            folder_id
+        } = req.body;
+
+        const newNote = {
+            title,
+            content, 
+            modified,
+            folder_id
+        };
+
+        for (const [key, value] of Object.entries(newNote)) {
+            if (value == null) {
+                return res.status(400).json({
+                    error: {
+                        message: `Missing '${key}' in request body`
+                    }
+                });
+            }
+        }
+
+        NotesService.insertNote(
+            req.app.get('db'),
+            newNote
+        )
+        .then(note => {
+            res
+                .status(201)
+                .json(note);
+        })
+        .catch(next);
+
+
+    })
 
 notesRouter
     .route('/:noteId')
