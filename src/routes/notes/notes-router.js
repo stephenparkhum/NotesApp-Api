@@ -85,7 +85,7 @@ notesRouter
             req.params.noteId
         )
         .then(() => {
-            res.status(204).end();
+            res.status(204).send(`Your note has been deleted!`).end();
         })
         .catch(next);
     });
